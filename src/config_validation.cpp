@@ -1,0 +1,2 @@
+#include "config_validation.hpp"
+namespace queueing {std::vector<std::string> validate_config(const Config& c){std::vector<std::string> issues;if(c.customers<1)issues.push_back("customers must be positive");if(c.servers<1)issues.push_back("servers must be positive");if(c.arrival_rate<=0)issues.push_back("arrival_rate must be positive");if(c.service_rate<=0)issues.push_back("service_rate must be positive");if(c.arrival_rate>=c.service_rate*c.servers)issues.push_back("offered load may exceed service capacity");return issues;}}

@@ -1,0 +1,3 @@
+#include "experiment.hpp"
+#include <cmath>
+namespace queueing {Aggregate replicate(Config c,int count){if(count<2)throw std::invalid_argument("at least two replications required");double sum=0,sq=0,util=0;for(int i=0;i<count;i++){c.seed+=static_cast<std::uint64_t>(i+1);auto s=simulate(c);sum+=s.mean_wait;sq+=s.mean_wait*s.mean_wait;util+=s.utilization;}double mean=sum/count,variance=std::max(0.0,sq/count-mean*mean),sd=std::sqrt(variance);return{mean,sd,util/count,1.96*sd/std::sqrt(count),count};}std::vector<PolicyResult> compare_policies(Config c,int count){std::vector<PolicyResult> out;for(auto p:{Policy::fifo,Policy::shortest,Policy::priority}){c.policy=p;out.push_back({p,replicate(c,count)});}return out;}}
