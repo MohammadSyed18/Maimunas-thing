@@ -12,3 +12,7 @@ ctest --test-dir build --output-on-failure
 ```
 
 these are simulation results, not predictions for a real clinic or school. the model currently assumes independent exponential timing.
+
+## Implementation details
+
+Replicated experiments use numerically stable online variance with a sample standard deviation. Policy comparisons share the same replication seeds, and simulations reject non-finite rates.
